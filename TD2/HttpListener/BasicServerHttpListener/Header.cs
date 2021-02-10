@@ -16,9 +16,12 @@ namespace ConsoleApp3
             this.headers = headers;
         }
         
-        public void PrintHeader()
+        public void PrintFieldHeader(HttpRequestHeader field)
         {
-            //Console.WriteLine(req.ToString());
+            Console.WriteLine(headers.Get(field.ToString()));
+        }
+        public void PrintAllHeader()
+        {
             Console.WriteLine(headers.ToString());
         }
     }
