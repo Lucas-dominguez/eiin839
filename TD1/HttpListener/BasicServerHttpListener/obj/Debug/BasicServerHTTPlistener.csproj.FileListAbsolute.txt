@@ -25,3 +25,10 @@ C:\Users\jean-yves\Source\Repos\benjaminvella\eiin839\TP1\HttpListener\BasicServ
 C:\Users\jean-yves\Source\Repos\benjaminvella\eiin839\TP1\HttpListener\BasicServerHttpListener\obj\Debug\BasicServerHTTPlistener.csproj.CoreCompileInputs.cache
 C:\Users\jean-yves\Source\Repos\benjaminvella\eiin839\TP1\HttpListener\BasicServerHttpListener\obj\Debug\ConsoleApp3.exe
 C:\Users\jean-yves\Source\Repos\benjaminvella\eiin839\TP1\HttpListener\BasicServerHttpListener\obj\Debug\ConsoleApp3.pdb
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD1\HttpListener\BasicServerHttpListener\bin\Debug\ConsoleApp3.exe.config
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD1\HttpListener\BasicServerHttpListener\bin\Debug\ConsoleApp3.exe
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD1\HttpListener\BasicServerHttpListener\bin\Debug\ConsoleApp3.pdb
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD1\HttpListener\BasicServerHttpListener\obj\Debug\BasicServerHTTPlistener.csprojAssemblyReference.cache
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD1\HttpListener\BasicServerHttpListener\obj\Debug\BasicServerHTTPlistener.csproj.CoreCompileInputs.cache
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD1\HttpListener\BasicServerHttpListener\obj\Debug\ConsoleApp3.exe
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD1\HttpListener\BasicServerHttpListener\obj\Debug\ConsoleApp3.pdb
