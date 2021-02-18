@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
 using ConsoleApp3;
+
 namespace BasicServerHTTPlistener
 {
     internal class Program
@@ -59,15 +59,17 @@ namespace BasicServerHTTPlistener
                         documentContents = readStream.ReadToEnd();
                     }
                 }
+
+                //Question 1 :
                 h.PrintFieldHeader(HttpRequestHeader.Accept);
-                h.PrintAllHeader();
+                h.PrintAllHeader();               
                 Console.WriteLine($"Received request for {request.Url}");
                 Console.WriteLine(documentContents);
                 // Obtain a response object.
                 HttpListenerResponse response = context.Response;
 
                 // Construct a response.
-                string responseString = "<HTML><BODY> Hello world!</BODY></HTML>";
+                string responseString = "<HTML><BODY>Hello World </BODY></HTML>";
                 byte[] buffer = System.Text.Encoding.UTF8.GetBytes(responseString);
                 // Get a response stream and write the response to it.
                 response.ContentLength64 = buffer.Length;

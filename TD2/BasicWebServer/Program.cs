@@ -6,6 +6,9 @@ using System.Text;
 using System.Web;
 
 namespace BasicServerHTTPlistener
+
+    // http://localhost:8080/MyNom?param1=Lucas&param2=DOMINGUEZ
+
 {
     internal class Program
     {

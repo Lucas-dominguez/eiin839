@@ -1,0 +1,6 @@
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD2\HttpListener\ExecMethod\bin\Debug\ExecMethod.exe.config
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD2\HttpListener\ExecMethod\bin\Debug\ExecMethod.exe
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD2\HttpListener\ExecMethod\bin\Debug\ExecMethod.pdb
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD2\HttpListener\ExecMethod\obj\Debug\ExecMethod.csproj.CoreCompileInputs.cache
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD2\HttpListener\ExecMethod\obj\Debug\ExecMethod.exe
+D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD2\HttpListener\ExecMethod\obj\Debug\ExecMethod.pdb
