@@ -5,3 +5,10 @@ D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD2\WebDynamic\bin\Debug\W
 D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD2\WebDynamic\bin\Debug\WebDynamic.pdb
 D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD2\WebDynamic\obj\Debug\WebDynamic.exe
 D:\LUCAS\Polytech\SI4\2e Semestre\Soc\TD\Fork\eiin839\TD2\WebDynamic\obj\Debug\WebDynamic.pdb
+D:\LUCAS\Polytech\SI4\2eSemestre\Soc\TD\Fork\eiin839\TD2\WebDynamic\bin\Debug\WebDynamic.exe.config
+D:\LUCAS\Polytech\SI4\2eSemestre\Soc\TD\Fork\eiin839\TD2\WebDynamic\bin\Debug\WebDynamic.exe
+D:\LUCAS\Polytech\SI4\2eSemestre\Soc\TD\Fork\eiin839\TD2\WebDynamic\bin\Debug\WebDynamic.pdb
+D:\LUCAS\Polytech\SI4\2eSemestre\Soc\TD\Fork\eiin839\TD2\WebDynamic\obj\Debug\WebDynamic.csprojAssemblyReference.cache
+D:\LUCAS\Polytech\SI4\2eSemestre\Soc\TD\Fork\eiin839\TD2\WebDynamic\obj\Debug\WebDynamic.csproj.CoreCompileInputs.cache
+D:\LUCAS\Polytech\SI4\2eSemestre\Soc\TD\Fork\eiin839\TD2\WebDynamic\obj\Debug\WebDynamic.exe
+D:\LUCAS\Polytech\SI4\2eSemestre\Soc\TD\Fork\eiin839\TD2\WebDynamic\obj\Debug\WebDynamic.pdb

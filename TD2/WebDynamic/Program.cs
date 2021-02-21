@@ -60,6 +60,7 @@ namespace WebDynamic
 
                 //Question 4 : http://localhost:8080/myMethod1?param1=Lucas&param2=DOMINGUEZ
                 // Question 5 : http://localhost:8080/myMethod2?param1=Lucas&param2=DOMINGUEZ
+                // Question 6 : http://localhost:8080/myMethod3?param1=Lucas&param2=DOMINGUEZ
                 Type type = typeof(MyMethods);
 
                 string methodName = "";
