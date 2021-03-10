@@ -2,10 +2,49 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- The title of the page is written in the tab of the browser. -->
-    <title>My first Web Services UI client</title>
+    <title>JCDecaux</title>
+    <link rel="stylesheet" href="main.css">
 </head>
-<body>
-    <h1 id="workingTest"></h1>
+<body >
+
+    <img class="thumbnail" src= "https://tse3.mm.bing.net/th?id=OIP.028WW8JrwQ3o4R57uMyCUAHaEH&pid=Api" alt="JCDecaux image">
+
+    <div class="apiKeyC horizontal-center">
+        <label for="apikey">API KEY : </label>
+        <input class = "keyinput" id="apikey" value="ac428b37563fe08de2eeea03fe75f27e4dce458a" type="text">
+        <button class= "button-purple" onclick="retrieveAllContracts();">Valider</button>
+    </div>
+
+
+    <div class="ChooseC horizontal-center">
+        <label for="contracts">Choisis un contrat</label>
+        <input list="contracts-list" id="contracts" name="contracts" />
+        <datalist id="contracts-list">
+        </datalist>
+        <button onclick="retrieveContractStations();" class= "button-purple" id="affichStations">Afficher les stations</button>
+    </div>
+
+    <div class="SearchSt horizontal-center">
+        <label for="latitude">Latitude</label>
+        <input class = "coord" id="latitude" type="number" value="45"/>
+        <label for="longitude">Longitude</label>
+        <input class = "coord" id="longitude" type="number" value="45"/>
+    </div>
+    <div class=" horizontal-center">
+        <button onclick="nearestStation();" class= "button-purple">Chercher la station la plus proche</button>
+    </div>
+    <br>
+    <div class = "horizontal-center" id="NearestStationResult"></div>
+
+
+
+    <div id="modalStations" class="modal">
+        <div class="modal-content">
+            <h1 id="modaltitre">Liste des stations de la ville </h1>
+          <span class="close">&times;</span>
+          <div class = "modalTxtC" id="modalTxt">Rien</div>
+        </div>
+    </div>
+    <script type="text/javascript" src="main.js"></script>
 </body>
 </html>
