@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="254b6619-3d7d-45c5-8a4d-e63a4d1cc746" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:8733/Design_Time_Addresses/MathsOperations/Service1/mex" Protocol="mex" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="service.wsdl" MetadataType="Wsdl" ID="4360aea8-f336-4096-8403-5b5a499cd174" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathsOperations/Service1/mex" />
+    <MetadataFile FileName="service.xsd" MetadataType="Schema" ID="a94d5cd3-cb54-4a56-8435-a09441f80ca0" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathsOperations/Service1/mex" />
+    <MetadataFile FileName="service1.xsd" MetadataType="Schema" ID="50ba20c5-424b-4087-afc8-09545f42f67c" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathsOperations/Service1/mex" />
+    <MetadataFile FileName="MathsOperations.xsd" MetadataType="Schema" ID="daf8fbcc-b596-4b53-9fd7-383beb5cc17a" SourceId="1" SourceUrl="http://localhost:8733/Design_Time_Addresses/MathsOperations/Service1/mex" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

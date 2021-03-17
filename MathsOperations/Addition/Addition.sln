@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Addition", "Addition.csproj", "{3044F7C1-7F97-467D-A8BB-FBD45B763F37}"
+	ProjectSection(ProjectDependencies) = postProject
+		{956F6A01-A157-46B8-972D-14B16B86847D} = {956F6A01-A157-46B8-972D-14B16B86847D}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MathsOperations", "..\MathsOperations\MathsOperations.csproj", "{956F6A01-A157-46B8-972D-14B16B86847D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3044F7C1-7F97-467D-A8BB-FBD45B763F37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3044F7C1-7F97-467D-A8BB-FBD45B763F37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3044F7C1-7F97-467D-A8BB-FBD45B763F37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3044F7C1-7F97-467D-A8BB-FBD45B763F37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{956F6A01-A157-46B8-972D-14B16B86847D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{956F6A01-A157-46B8-972D-14B16B86847D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{956F6A01-A157-46B8-972D-14B16B86847D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{956F6A01-A157-46B8-972D-14B16B86847D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {05A30853-1504-4CE6-997A-41EFF96600CA}
+	EndGlobalSection
+EndGlobal
