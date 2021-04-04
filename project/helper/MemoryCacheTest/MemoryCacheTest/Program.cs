@@ -63,7 +63,7 @@ namespace MemoryCacheTest
             PrintAllCache(cache);
 
             //remove cache
-            cache.Remove("obj3");
+            cache.Remove("Obj3");
 
             //print all cache
             PrintAllCache(cache);
