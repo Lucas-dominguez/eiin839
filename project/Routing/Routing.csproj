@@ -5,27 +5,16 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.50727</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{31730C56-B819-4DA4-9167-C60E6D819576}</ProjectGuid>
+    <ProjectGuid>{22F367B2-C415-4E8D-81FD-D41EA3EE2A06}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cache</RootNamespace>
-    <AssemblyName>Cache</AssemblyName>
+    <RootNamespace>Routing</RootNamespace>
+    <AssemblyName>Routing</AssemblyName>
     <ProjectTypeGuids>{3D9AD99F-2412-4246-B90B-4EAA41C64699};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <StartArguments>/client:"WcfTestClient.exe"</StartArguments>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <WcfConfigValidationEnabled>True</WcfConfigValidationEnabled>
     <XsdCodeGenEnabled>True</XsdCodeGenEnabled>
-    <XsdCodeGenSerializerMode>XmlSerializer</XsdCodeGenSerializerMode>
-    <XsdCodeGenReuseTypesFlag>True</XsdCodeGenReuseTypesFlag>
-    <XsdCodeGenReuseTypesMode>All</XsdCodeGenReuseTypesMode>
-    <XsdCodeGenReferences />
-    <XsdCodeGenNamespaceMappings>%2a, Cache.ContractTypes</XsdCodeGenNamespaceMappings>
-    <XsdCodeGenCollectionTypes>System.Array%3bSystem.Collections.Generic.Dictionary`2</XsdCodeGenCollectionTypes>
-    <XsdCodeGenExcludedTypes />
-    <XsdCodeGenImportXmlTypes>True</XsdCodeGenImportXmlTypes>
-    <XsdCodeGenGenerateSerializableTypes>True</XsdCodeGenGenerateSerializableTypes>
-    <XsdCodeGenGenerateInternalTypes>False</XsdCodeGenGenerateInternalTypes>
-    <XsdCodeGenEnableDataBinding>False</XsdCodeGenEnableDataBinding>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -50,24 +39,20 @@
       <HintPath>packages\Newtonsoft.Json.13.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
-    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.ServiceModel.Web" />
-    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IWebProxyService.cs" />
+    <Compile Include="IRouting.cs" />
     <Compile Include="JCDecauxItem.cs" />
-    <Compile Include="ProxyCache.cs" />
-    <Compile Include="WebProxyService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Routing.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -89,4 +74,11 @@
       </FlavorProperties>
     </VisualStudio>
   </ProjectExtensions>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
 </Project>

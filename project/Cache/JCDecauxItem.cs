@@ -1,29 +1,30 @@
 ﻿using System;
-
-public class JCDecauxItem
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.Net.Http;
+using System.Threading.Tasks;
+namespace Cache
 {
-    public class Station
+    public class JCDecauxItem : CachableClass
     {
-        public string number { get; set; }
-        public string contract_name { get; set; }
-        public string name { get; set; }
-        public string address { get; set; }
-        public Position position { get; set; }
-        public bool banking { get; set; }
-        public bool bonus { get; set; }
-        public int bike_stands { get; set; }
-        public int available_bike_stands { get; set; }
-        public string status { get; set; }
-        public string last_update { get; set; }
+        public string JCDecauxContent;
+        public JCDecauxItem(){}
 
-        public Station()
-        {
-            Console.WriteLine("Instenciation of a station");
+        public override void instantiate(List<string> ids){
+            this.JCDecauxContent = sendRequest(ids[0], ids[1]).Result;
+        }
+
+        public async Task<string> sendRequest(string stationNumber, string contractName){
+            string request = "https://api.jcdecaux.com/vls/v3/stations/"+ stationNumber + "?contract=" + contractName + "&apiKey=ac428b37563fe08de2eeea03fe75f27e4dce458a";
+            System.Diagnostics.Debug.WriteLine("Requête envoyée à Decaux !!!!! : "+  request);
+            HttpClient client = new HttpClient();
+            HttpResponseMessage response = await client.GetAsync(request);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            System.Diagnostics.Debug.WriteLine("response : " + responseBody);
+            return responseBody;
         }
     }
 
-    public class Position{
-        public float lat { get; set; }
-        public float lng { get; set; }
-    }
+
 }
