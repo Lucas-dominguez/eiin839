@@ -1,7 +1,7 @@
 
 function sendRequestToRoutingWS(){
     var caller = new XMLHttpRequest();
-    var request = "http://localhost:8734/Design_Time_Addresses/Routing/route?start=" 
+    var request = "http://localhost:8734/Design_Time_Addresses/Routing/rest/route?start=" 
     + document.getElementById("depart").value + "&end=" + document.getElementById("arrivee").value;
     console.log("Sending request to Proxy : " + request)
     caller.open("GET", request, true);

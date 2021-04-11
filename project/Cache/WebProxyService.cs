@@ -16,7 +16,10 @@ namespace Cache
 
         public string GetStationInfo(string stationNb, string contractName){
             System.ServiceModel.Web.WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
-            return cache.Get(new List<string>() { stationNb, contractName }, 60).JCDecauxContent;
+            System.Diagnostics.Debug.WriteLine("On me demande : " + stationNb  +" à " + contractName);
+            string s = cache.Get(new List<string>() { stationNb, contractName }, 6000).JCDecauxContent;
+            System.Diagnostics.Debug.WriteLine("OK done ! ");
+            return s; // Delai d'expiration du cache
         }
 
         public string PrintAllCache(){

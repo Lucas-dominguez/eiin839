@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
+
 namespace Routing
 {
 
@@ -37,10 +39,22 @@ namespace Routing
         int electricalInternalBatteryBikes { get; set; }
         int electricalRemovableBatteryBikes { get; set; }
     }
+     [DataContractAttribute]
     public class Position
     {
         public float latitude { get; set; }
         public float longitude { get; set; }
+
+        public Position(float latitude, float longitude) {
+            this.latitude = latitude;
+            this.longitude = longitude;
+        }
+    }
+
+    public class PositionGeoCoord
+    {
+        public float lat { get; set; }
+        public float lon { get; set; }
     }
 
     public class GetStationInfoResultClass{

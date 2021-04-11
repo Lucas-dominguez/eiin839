@@ -22,11 +22,16 @@ namespace Routing
         }
 
         public List<Station> GetRouting(string start, string end){
-            System.Diagnostics.Debug.WriteLine("Il veut aller de "+ start + " à " + end);
             System.ServiceModel.Web.WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
-            Station s = this.stations[0];
-            s = GetInfosStation(s.contractName, s.number);
-            return new List<Station>() { s };
+            System.Diagnostics.Debug.WriteLine("Il veut aller de "+ start + " à " + end);
+            Position startCo = getPositionFromAddress(start);
+            Position endCo = getPositionFromAddress(end);
+            System.Diagnostics.Debug.WriteLine("(" + startCo.latitude + ", " + startCo.longitude + ") -> (" + endCo.latitude + ", " + endCo.longitude + ")");
+            Station stationStart = nearestStation(startCo);
+            Station stationEnd = nearestStation(endCo);
+            stationStart = GetInfosStation(stationStart.contractName, stationStart.number);
+            stationEnd = GetInfosStation(stationEnd.contractName, stationEnd.number);
+            return new List<Station>() { stationStart, stationEnd };
         }
 
         public List<Station> GetAllStation() {
@@ -45,12 +50,67 @@ namespace Routing
         }
 
 
-        public async Task<string> getResult(string request)
-        {
+        public async Task<string> getResult(string request) {
             HttpResponseMessage response = await client.GetAsync(request);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
             return responseBody;
+        }
+
+        public async Task<string> getResultFromGeoCoding(string address)
+        {
+            string request = "https://forward-reverse-geocoding.p.rapidapi.com/v1/search?q=" + address + "&format=json&accept-language=en&polygon_threshold=0.0";
+            var r = new HttpRequestMessage
+            {
+                Method = HttpMethod.Get,
+                RequestUri = new Uri(request),
+                Headers = {
+                    { "x-rapidapi-key", "b82306176amsh10f7b990e3d70bep1ba279jsn7ed83c293ebb" },
+                    { "x-rapidapi-host", "forward-reverse-geocoding.p.rapidapi.com" },
+                },
+            };
+            using (var response = await client.SendAsync(r))
+            {
+                response.EnsureSuccessStatusCode();
+                var body = await response.Content.ReadAsStringAsync();
+                return body;
+            }
+        }
+
+        public Position getPositionFromAddress(string address) {
+            string s = getResultFromGeoCoding(address).Result;
+            PositionGeoCoord p = JsonConvert.DeserializeObject<List<PositionGeoCoord>>(s)[0];
+            return new Position(p.lat, p.lon);
+        }
+
+        public Station nearestStation(Position position) {
+            Station nearest = this.stations[0];
+            double distMin = double.MaxValue;
+            foreach (Station station in stations){
+                double distance = getDistance(position, station.position);
+                if (distance < distMin) {
+                    distMin = distance;
+                    nearest = station;
+                }
+            }
+            return nearest;
+        }
+
+        double getDistance(Position pos1, Position pos2) {
+            var earthRadius = 6371;
+            var dLat = deg2rad(pos2.latitude - pos1.latitude);
+            var dLon = deg2rad(pos2.longitude - pos1.longitude);
+            var a =
+                Math.Sin(dLat / 2) * Math.Sin(dLat / 2) +
+                Math.Cos(deg2rad(pos1.latitude)) * Math.Cos(deg2rad(pos2.latitude)) *
+                Math.Sin(dLon / 2) * Math.Sin(dLon / 2);
+            var c = 2 * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1 - a));
+            var d = earthRadius * c; 
+            return d;
+        }
+
+        double deg2rad(double deg){
+            return deg * (Math.PI / 180);
         }
     }
 }
