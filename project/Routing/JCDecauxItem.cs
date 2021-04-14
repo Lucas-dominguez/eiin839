@@ -23,6 +23,11 @@ namespace Routing
         public Stands overflowStands { get; set; }
 
         public Station() { }
+
+        public Station(Position position, string name) {
+            this.position = position;
+            this.name = name;
+        }
     }
 
     public class Stands
@@ -39,10 +44,12 @@ namespace Routing
         int electricalInternalBatteryBikes { get; set; }
         int electricalRemovableBatteryBikes { get; set; }
     }
-     [DataContractAttribute]
+    [DataContractAttribute]
     public class Position
     {
+        [DataMember]
         public float latitude { get; set; }
+        [DataMember]
         public float longitude { get; set; }
 
         public Position(float latitude, float longitude) {
@@ -57,8 +64,16 @@ namespace Routing
         public float lon { get; set; }
     }
 
-    public class GetStationInfoResultClass{
+    public class GetStationInfoResultClass {
         public string GetStationInfoResult { get; set; }
+    }
+
+    public class RoutingResult {
+        public List<string> routes { get; set; }
+        public List<Station> infosStations { get; set; }
+        public string infos { get; set; }
+
+
     }
 
 }
