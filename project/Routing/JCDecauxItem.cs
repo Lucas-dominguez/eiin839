@@ -28,21 +28,36 @@ namespace Routing
             this.position = position;
             this.name = name;
         }
+
+        public override bool Equals(Object obj) {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType())) {
+                return false;
+            }
+            else {
+                Station s = (Station)obj;
+                return (number == s.number) && (contractName == s.contractName);
+            }
+        }
+
+        public override string ToString()
+        {
+            return number + ", " + contractName;
+        }
     }
 
     public class Stands
     {
-        Availabilities availabilities { get; set; }
-        int capacity { get; set; }
+        public Availabilities availabilities { get; set; }
+        public int capacity { get; set; }
     }
     public class Availabilities
     {
-        int bikes { get; set; }
-        int stands { get; set; }
-        int mechanicalBikes { get; set; }
-        int electricalBikes { get; set; }
-        int electricalInternalBatteryBikes { get; set; }
-        int electricalRemovableBatteryBikes { get; set; }
+        public int bikes { get; set; }
+        public int stands { get; set; }
+        public int mechanicalBikes { get; set; }
+        public int electricalBikes { get; set; }
+        public int electricalInternalBatteryBikes { get; set; }
+        public int electricalRemovableBatteryBikes { get; set; }
     }
     [DataContractAttribute]
     public class Position

@@ -11,16 +11,16 @@ using System.Globalization;
 
 namespace Routing
 {
-    public class Routing : IRouting
-    {
+    public class Routing : IRouting {
         HttpClient client;
         List<Station> stations;
-        public Routing(){
+        public Routing() {
             this.client = new HttpClient();
             this.GetAllStation();
         }
 
-        public List<Station> GetRouting(string start, string end){
+        public List<Station> GetRouting(string start, string end) {
+            /*
             System.ServiceModel.Web.WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
             System.Diagnostics.Debug.WriteLine("Il veut aller de "+ start + " à " + end);
             Position startCo = getPositionFromAddress(start);
@@ -32,62 +32,114 @@ namespace Routing
             stationEnd = GetInfosStation(stationEnd.contractName, stationEnd.number);
             List<Station> cp =  new List<Station>() { new Station(startCo, "startingPo"), stationStart, stationEnd, new Station(endCo, "destination")};
             return cp;
+            */
+            return null;
         }
 
 
-        public RoutingResult GetRoutingMap(string start, string end)
-        {
+        public RoutingResult GetRoutingMap(string start, string end) {
             System.ServiceModel.Web.WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
-            System.Diagnostics.Debug.WriteLine("Il veut aller de " + start + " à " + end);
+            RoutingResult errorResult = new RoutingResult();
+            System.Diagnostics.Debug.WriteLine("He wants to go from " + start + " to " + end);
+            if(stations == null || stations.Count() < 2) {
+                errorResult.infos = "Error, there is no station available at the moment, try another time";
+                return errorResult;
+            }
             Position startCo = getPositionFromAddress(start);
+            if (startCo == null) {
+                errorResult.infos = "Error, no coordinates for your starting address " + start + " has been found";
+                return errorResult;
+            }
             Position endCo = getPositionFromAddress(end);
+            if (endCo == null) { 
+                errorResult.infos = "Error, no coordinates for your destination address " + end + " has been found";
+                return errorResult;
+            }
             System.Diagnostics.Debug.WriteLine("(" + startCo.latitude + ", " + startCo.longitude + ") -> (" + endCo.latitude + ", " + endCo.longitude + ")");
-            Station stationStart = nearestStation(startCo);
-            Station stationEnd = nearestStation(endCo);
-            stationStart = GetInfosStation(stationStart.contractName, stationStart.number);
-            stationEnd = GetInfosStation(stationEnd.contractName, stationEnd.number);
+           
+            Station stationStart = nearestAvailableStation(startCo, true);
+            if (stationStart == null) {
+                errorResult.infos = "Sorry but there is no stations with available bike for the moment, try later.";
+                return errorResult;
+            }
+            Station stationEnd = nearestAvailableStation(endCo, false);
+            if (stationStart == null) {
+                errorResult.infos = "Sorry but there is no stations with available stands to leave the bike for the moment, try later.";
+                return errorResult;
+            }
+            List<string> routes = GetRoutesFromGPS(startCo, stationStart.position, stationEnd.position, endCo);
+            if(routes == null) {
+                errorResult.infos = "Sorry but there is no path at bicycle to your destination";
+                return errorResult;
+            }
             RoutingResult r = new RoutingResult();
-            r.routes = GetRoutesFromGPS(startCo.latitude, startCo.longitude, stationStart.position.latitude, stationStart.position.longitude, stationEnd.position.latitude, stationEnd.position.longitude, endCo.latitude, endCo.longitude);
+            r.routes = routes;
             r.infosStations = new List<Station>() { stationStart, stationEnd };
-            r.infos = "RAZ";
+            r.infos = "OK";
             return r;
         }
 
+
+     
+
+        /**
+         * Call webProxy to get all the station at the beginning
+         **/ 
         public List<Station> GetAllStation() {
-            string request = "https://api.jcdecaux.com/vls/v3/stations?apiKey=ac428b37563fe08de2eeea03fe75f27e4dce458a";
-            string s = getResult(request).Result;
-            System.Diagnostics.Debug.WriteLine("All the stations were recuperated");
-            this.stations = JsonConvert.DeserializeObject<List<Station>>(s);
-            return stations;
+            try {
+                string request = "https://api.jcdecaux.com/vls/v3/stations?apiKey=ac428b37563fe08de2eeea03fe75f27e4dce458a";
+                string s = getResult(request).Result;
+                this.stations = JsonConvert.DeserializeObject<List<Station>>(s);
+                System.Diagnostics.Debug.WriteLine("All the stations were recuperated");
+                return stations;
+            }
+            catch(Exception e) {
+                System.Diagnostics.Debug.WriteLine("Error while recupering stations");
+                return null;
+            }
         }
 
-        public List<string> GetRoutesFromGPS(float lap1, float lop1, float lap2, float lop2, float lap3, float lop3, float lap4, float lop4){
-            string goToStation1 = "https://api.mapbox.com/directions/v5/mapbox/walking/" + lop1.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + lap1.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + lop2.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + lap2.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?geometries=geojson&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
-            string bikeRoute = "https://api.mapbox.com/directions/v5/mapbox/cycling/" + lop2.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + lap2.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + lop3.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + lap3.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?geometries=geojson&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
-            string leaveBike = "https://api.mapbox.com/directions/v5/mapbox/walking/" + lop3.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + lap3.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + lop4.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + lap4.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?geometries=geojson&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
-            System.Diagnostics.Debug.WriteLine(goToStation1);
-            System.Diagnostics.Debug.WriteLine(bikeRoute);
-            System.Diagnostics.Debug.WriteLine(leaveBike);
-            return new List<string>() { getResult(goToStation1).Result, getResult(bikeRoute).Result, getResult(leaveBike).Result};
+        /**
+         * Call the cache to have the information about one station.
+         */
+        public Station GetInfosStation(string contractName, string stationNb) {
+            try {
+                string request = "http://localhost:8733/Design_Time_Addresses/Cache/GetStationInfos?stationNb=" + stationNb + "&contractName=" + contractName;
+                string st = JsonConvert.DeserializeObject<GetStationInfoResultClass>(getResult(request).Result).GetStationInfoResult;
+                return JsonConvert.DeserializeObject<Station>(st);
+            }
+            catch(Exception e) {
+                System.Diagnostics.Debug.WriteLine("Error while getting infos on station : " + stationNb +" of " + contractName);
+                return null;
+            }
         }
 
-        public Station GetInfosStation(string contractName, string stationNb)
-        {
-            string request = "http://localhost:8733/Design_Time_Addresses/Cache/GetStationInfos?stationNb=" + stationNb + "&contractName=" + contractName;
-            string st = JsonConvert.DeserializeObject<GetStationInfoResultClass>(getResult(request).Result).GetStationInfoResult;
-            return JsonConvert.DeserializeObject<Station>(st);
+        /**
+         *  Call the mapbox direction api to get the route between 4 points
+         **/
+        public List<string> GetRoutesFromGPS(Position start, Position station1, Position station2, Position end) {
+            try {
+                string goToStation1 = "https://api.mapbox.com/directions/v5/mapbox/walking/" + start.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + start.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + station1.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station1.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?geometries=geojson&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
+                string bikeRoute = "https://api.mapbox.com/directions/v5/mapbox/cycling/" + station1.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station1.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + station2.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station2.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?geometries=geojson&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
+                string leaveBike = "https://api.mapbox.com/directions/v5/mapbox/walking/" + station2.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station2.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + end.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + end.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?geometries=geojson&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
+                System.Diagnostics.Debug.WriteLine(goToStation1);
+                System.Diagnostics.Debug.WriteLine(bikeRoute);
+                System.Diagnostics.Debug.WriteLine(leaveBike);
+                string route1 = getResult(goToStation1).Result;
+                string route2 = getResult(bikeRoute).Result;
+                string route3 = getResult(leaveBike).Result;
+                return new List<string>() { route1, route2, route3 };
+            }
+            catch {
+                System.Diagnostics.Debug.WriteLine("Error while getting the routes");
+                return null;
+            }
         }
 
-
-        public async Task<string> getResult(string request) {
-            HttpResponseMessage response = await client.GetAsync(request);
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-            return responseBody;
-        }
-
-        public async Task<string> getResultFromGeoCoding(string address)
-        {
+        /**
+         * Call geocoding api to find the coordinate of a address (any format of string)
+         **/
+        public async Task<string> getResultFromGeoCoding(string address) {
             string request = "https://forward-reverse-geocoding.p.rapidapi.com/v1/search?q=" + address + "&format=json&accept-language=en&polygon_threshold=0.0";
             var r = new HttpRequestMessage
             {
@@ -106,25 +158,98 @@ namespace Routing
             }
         }
 
+        /**
+         * return the coordinate of an address on earth.
+         **/
         public Position getPositionFromAddress(string address) {
-            string s = getResultFromGeoCoding(address).Result;
-            PositionGeoCoord p = JsonConvert.DeserializeObject<List<PositionGeoCoord>>(s)[0];
-            return new Position(p.lat, p.lon);
+            try {
+                string s = getResultFromGeoCoding(address).Result;
+                PositionGeoCoord p = JsonConvert.DeserializeObject<List<PositionGeoCoord>>(s)[0];
+                return new Position(p.lat, p.lon);
+            }
+            catch (Exception e) {
+                System.Diagnostics.Debug.WriteLine("Error while getting coordinates");
+                return null;
+            }
         }
 
-        public Station nearestStation(Position position) {
-            Station nearest = this.stations[0];
+        /**
+         * Search in all the station one by one, the nearest with available bike(pickup=true)/or available space (pickup=false)
+         **/
+         public Station nearestAvailableStation(Position startCo, bool pickup) {           
+            List<Station> ignore = new List<Station>();
+            bool stationFound = false;
+            Station station;
+            do {
+                station = nearestStation(startCo, ignore);
+                if (station == null) {
+                    System.Diagnostics.Debug.WriteLine("There is no station with available bike anywhere");
+                    return null;
+                }
+                Station stationRes = GetInfosStation(station.contractName, station.number);
+                if(stationRes == null) {
+                    System.Diagnostics.Debug.WriteLine("Internal Error");
+                    ignore.Add(station);
+                    continue;
+                }
+                station = stationRes;
+                if (pickup && station.totalStands.availabilities.bikes == 0) {
+                    System.Diagnostics.Debug.WriteLine("Here1");
+                    ignore.Add(station);
+                }
+                /**else if(!pickup && station.totalStands.availabilities.stands == 0) {
+                    System.Diagnostics.Debug.WriteLine("Here2");
+                    ignore.Add(station);
+                    }**/
+                else {
+                    System.Diagnostics.Debug.WriteLine("Here3");
+                    stationFound = true;
+                    }
+            }
+            while (!stationFound);
+            return station;
+        }
+
+        /**
+         * Find the nearest station of a coordinate, the station in the ignore list are ignored
+         **/
+        public Station nearestStation(Position position, List<Station> ignore) {
+            Station nearest = null;
+            foreach(Station s in stations) {
+                if (!ignore.Contains(s)) {
+                    nearest = s;
+                    break;
+                }
+
+            }
+            if (nearest == null)
+                return null;
             double distMin = double.MaxValue;
-            foreach (Station station in stations){
-                double distance = getDistance(position, station.position);
-                if (distance < distMin) {
-                    distMin = distance;
-                    nearest = station;
+            foreach (Station station in stations) {
+                if (!ignore.Contains(station)) {
+                    double distance = getDistance(position, station.position);
+                    if (distance < distMin) {
+                        distMin = distance;
+                        nearest = station;
+                    }
                 }
             }
             return nearest;
         }
 
+        /**
+         * return the response Task of an http request. 
+         **/
+        public async Task<string> getResult(string request) {
+            HttpResponseMessage response = await client.GetAsync(request);
+            response.EnsureSuccessStatusCode();
+            string responseBody = await response.Content.ReadAsStringAsync();
+            return responseBody;
+        }
+
+        /**
+         * Methods to compute the distance between to coordinate on earth (given in TD)
+        **/
         double getDistance(Position pos1, Position pos2) {
             var earthRadius = 6371;
             var dLat = deg2rad(pos2.latitude - pos1.latitude);
@@ -138,7 +263,7 @@ namespace Routing
             return d;
         }
 
-        double deg2rad(double deg){
+        double deg2rad(double deg) {
             return deg * (Math.PI / 180);
         }
     }

@@ -10,8 +10,17 @@ function sendRequestToRoutingWS(){
     caller.send();
 }
 
+function displayError(error){
+    document.getElementById("error").innerHTML = error;
+}
+
 function displayMap(){
-    var data = JSON.parse(this.responseText).GetRoutingMapResult.routes;
+    var data = JSON.parse(this.responseText).GetRoutingMapResult
+    if(data.infos!="OK"){
+        displayError(data.infos);
+        return;
+    }
+    data = data .routes;
     console.log(data)
     route1 = JSON.parse(data[0])
     route2 = JSON.parse(data[1])
