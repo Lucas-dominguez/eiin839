@@ -21,10 +21,21 @@
     </div>
     <div class=" horizontal-center">
         <button onclick="sendRequestToRoutingWS();" class= "button-purple">Itinéraire</button>
+        <button class= "button-purple" id="affichInfo" style="display: none;">Indications</button>
     </div>
+    <div id="infos"></div>
     <br>
+    <div id="infos"></div>
     <div id='map'></div>
     <div id="error"></div>
+    
+    <div id="modalInfo" class="modal">
+        <div class="modal-content">
+            <h1 id="modaltitre">Informations sur le trajet</h1>
+          <span class="close">&times;</span>
+          <div class = "modalTxtC" id="modalTxt">Rien</div>
+        </div>
+    </div>
     <script type="text/javascript" src="main.js"></script>
 </body>
 </html>

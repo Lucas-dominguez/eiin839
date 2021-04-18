@@ -24,18 +24,8 @@ body { margin:0; padding:0; }
     box-shadow: 0 6px 10px rgba(33, 34, 65, 0.2), 0 0 6px rgba(57, 44, 88, 0.15);
 }
 
-.keyinput {
-    background-color: #3c9bbc;
-    color: white;
-    width: 22em;
-  }
-
 html{
     font: italic small-caps bold 16px/2 cursive;
-}
-
-#affichStations{
-    margin-left: 3em;
 }
 
 .horizontal-center{
@@ -44,24 +34,7 @@ html{
     text-align: center;
     padding-bottom: 1em;
 }
-.ChooseC{
-    margin-left: 1.5em;
-}
-.apiKeyC{
-    margin-left: 1.5em;
-    margin-top: 2em;
-    margin-bottom: 2em;
-    margin-right: 2em;
-}
-.SearchSt{
-    margin-left: 1.5em;
-    margin-top: 2em;
-    margin-bottom: 2em;
-}
 
-#contracts:focus{
-    background-color: lightblue;
-}
 
 .coord{
     border: 2px solid red;
@@ -110,9 +83,21 @@ html{
       text-align: center;
   }
 
-  #apikey{
-      margin-right: 5em;
-  }
   #latitude{
       margin-right: 1em;
+  }
+
+  #infos {
+    position: absolute;
+    margin: 20px;
+    width: 25%;
+    top: 10px;
+    background-color: rgba(255, 255, 255, 0.6);
+    font-family: sans-serif;
+    font-size: 0.8em;
+    line-height: 2em;
+  }
+
+  #error{
+      text-align:center;
   }

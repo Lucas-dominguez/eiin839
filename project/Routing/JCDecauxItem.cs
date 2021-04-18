@@ -71,6 +71,19 @@ namespace Routing
             this.latitude = latitude;
             this.longitude = longitude;
         }
+
+        public override bool Equals(Object obj)
+        {
+            if ((obj == null) || !this.GetType().Equals(obj.GetType()))
+            {
+                return false;
+            }
+            else
+            {
+                Position p = (Position)obj;
+                return (latitude == p.latitude) && (longitude == p.longitude);
+            }
+        }
     }
 
     public class PositionGeoCoord

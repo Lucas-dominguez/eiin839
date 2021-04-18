@@ -18,25 +18,6 @@ namespace Routing
             this.client = new HttpClient();
             this.GetAllStation();
         }
-
-        public List<Station> GetRouting(string start, string end) {
-            /*
-            System.ServiceModel.Web.WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
-            System.Diagnostics.Debug.WriteLine("Il veut aller de "+ start + " à " + end);
-            Position startCo = getPositionFromAddress(start);
-            Position endCo = getPositionFromAddress(end);
-            System.Diagnostics.Debug.WriteLine("(" + startCo.latitude + ", " + startCo.longitude + ") -> (" + endCo.latitude + ", " + endCo.longitude + ")");
-            Station stationStart = nearestStation(startCo);
-            Station stationEnd = nearestStation(endCo);
-            stationStart = GetInfosStation(stationStart.contractName, stationStart.number);
-            stationEnd = GetInfosStation(stationEnd.contractName, stationEnd.number);
-            List<Station> cp =  new List<Station>() { new Station(startCo, "startingPo"), stationStart, stationEnd, new Station(endCo, "destination")};
-            return cp;
-            */
-            return null;
-        }
-
-
         public RoutingResult GetRoutingMap(string start, string end) {
             System.ServiceModel.Web.WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");
             RoutingResult errorResult = new RoutingResult();
@@ -55,6 +36,10 @@ namespace Routing
                 errorResult.infos = "Error, no coordinates for your destination address " + end + " has been found";
                 return errorResult;
             }
+            if(startCo.Equals(endCo)) {
+                errorResult.infos = "The start and the destination are at the same place.";
+                return errorResult;
+            }
             System.Diagnostics.Debug.WriteLine("(" + startCo.latitude + ", " + startCo.longitude + ") -> (" + endCo.latitude + ", " + endCo.longitude + ")");
            
             Station stationStart = nearestAvailableStation(startCo, true);
@@ -67,11 +52,19 @@ namespace Routing
                 errorResult.infos = "Sorry but there is no stations with available stands to leave the bike for the moment, try later.";
                 return errorResult;
             }
-            List<string> routes = GetRoutesFromGPS(startCo, stationStart.position, stationEnd.position, endCo);
-            if(routes == null) {
+            List<string> routeWalking = GetRoutesFromGPS(startCo, null, null, endCo);
+            if (stationStart.Equals(stationEnd)){
+                RoutingResult rW = new RoutingResult();
+                rW.routes = routeWalking;
+                rW.infos = "OK";
+                return rW;
+            }
+            List<string> routes = GetRoutesFromGPS(startCo, stationStart.position, stationEnd.position,endCo);
+            if(routes == null || routeWalking == null) {
                 errorResult.infos = "Sorry but there is no path at bicycle to your destination";
                 return errorResult;
             }
+            routes = checkTime(routes, routeWalking);
             RoutingResult r = new RoutingResult();
             r.routes = routes;
             r.infosStations = new List<Station>() { stationStart, stationEnd };
@@ -119,9 +112,14 @@ namespace Routing
          **/
         public List<string> GetRoutesFromGPS(Position start, Position station1, Position station2, Position end) {
             try {
-                string goToStation1 = "https://api.mapbox.com/directions/v5/mapbox/walking/" + start.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + start.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + station1.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station1.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?geometries=geojson&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
-                string bikeRoute = "https://api.mapbox.com/directions/v5/mapbox/cycling/" + station1.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station1.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + station2.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station2.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?geometries=geojson&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
-                string leaveBike = "https://api.mapbox.com/directions/v5/mapbox/walking/" + station2.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station2.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + end.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + end.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?geometries=geojson&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
+                if (station1 == null || station2 == null) { 
+                    string route = "https://api.mapbox.com/directions/v5/mapbox/walking/" + start.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + start.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + end.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + end.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?alternatives=false&geometries=geojson&steps=true&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
+                    System.Diagnostics.Debug.WriteLine(route);
+                    return new List<string>() { getResult(route).Result};
+                }
+                string goToStation1 = "https://api.mapbox.com/directions/v5/mapbox/walking/" + start.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + start.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + station1.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station1.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?alternatives=false&geometries=geojson&steps=true&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
+                string bikeRoute = "https://api.mapbox.com/directions/v5/mapbox/cycling/" + station1.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station1.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + station2.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station2.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?alternatives=false&geometries=geojson&steps=true&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
+                string leaveBike = "https://api.mapbox.com/directions/v5/mapbox/walking/" + station2.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + station2.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + ";" + end.longitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "," + end.latitude.ToString(CultureInfo.CreateSpecificCulture("en-EN")) + "?alternatives=false&geometries=geojson&steps=true&access_token=pk.eyJ1IjoibHVjYXNwb2x5dGVjaCIsImEiOiJja25lazgxemYyNjZ6MnVtcWNuY2ltMTU5In0.PRHFI72a0818EQvpX_VLzA";
                 System.Diagnostics.Debug.WriteLine(goToStation1);
                 System.Diagnostics.Debug.WriteLine(bikeRoute);
                 System.Diagnostics.Debug.WriteLine(leaveBike);
@@ -197,10 +195,10 @@ namespace Routing
                     System.Diagnostics.Debug.WriteLine("Here1");
                     ignore.Add(station);
                 }
-                /**else if(!pickup && station.totalStands.availabilities.stands == 0) {
+                else if(!pickup && station.totalStands.availabilities.stands == 0) {
                     System.Diagnostics.Debug.WriteLine("Here2");
                     ignore.Add(station);
-                    }**/
+                    }
                 else {
                     System.Diagnostics.Debug.WriteLine("Here3");
                     stationFound = true;
@@ -235,6 +233,34 @@ namespace Routing
                 }
             }
             return nearest;
+        }
+
+        public List<string> checkTime(List<string> routes, List<string> routeWalking) {
+            try {
+                if (routes.Count < 2)
+                    return routes;
+                int deb0 = routes[0].IndexOf("duration\":") + 10;
+                int fin0 = routes[0].IndexOf(",\"distance");
+                string t0 = routes[0].Substring(deb0, fin0 - deb0);
+                int deb1 = routes[1].IndexOf("duration\":") + 10;
+                int fin1 = routes[1].IndexOf(",\"steps");
+                string t1 = routes[1].Substring(deb1, fin1 - deb1);
+                int deb2 = routes[2].IndexOf("duration\":") + 10;
+                int fin2 = routes[2].IndexOf(",\"distance");
+                string t2 = routes[2].Substring(deb2, fin2 - deb2);
+                int debW = routeWalking[0].IndexOf("duration\":") + 10;
+                int finW = routeWalking[0].IndexOf(",\"distance");
+                string tW = routeWalking[0].Substring(debW, finW - debW);
+                System.Diagnostics.Debug.WriteLine(t0 + " " + t1 + " "  + t2 + " " + tW);
+                if (float.Parse(t0, CultureInfo.InvariantCulture) + float.Parse(t1, CultureInfo.InvariantCulture) + float.Parse(t2, CultureInfo.InvariantCulture) >= float.Parse(tW, CultureInfo.InvariantCulture))
+                    return routeWalking;
+                return routes;
+            }
+            catch {
+                System.Diagnostics.Debug.WriteLine("Error while computing time");
+                return routes;
+            }
+
         }
 
         /**

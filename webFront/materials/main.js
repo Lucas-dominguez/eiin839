@@ -89,9 +89,6 @@ function deg2rad(deg) {
 var modal = document.getElementById("modalStations");
 var btn = document.getElementById("affichStations");
 var span = document.getElementsByClassName("close")[0];
-//btn.onclick = function() {
-  //modal.style.display = "block";
-//}
 
 span.onclick = function() {
   modal.style.display = "none";
