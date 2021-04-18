@@ -81,6 +81,7 @@ html{
 
   .modalTxtC{
       text-align: center;
+      overflow-y: scroll;
   }
 
   #latitude{
@@ -100,4 +101,11 @@ html{
 
   #error{
       text-align:center;
+  }
+
+  .duration {
+    font-size: 2em;
+  }
+  #modaltitre{
+      text-align: center;
   }

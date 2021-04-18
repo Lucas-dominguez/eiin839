@@ -1,5 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/Routing" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/Routing" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://localhost:8734/Design_Time_Addresses/Routing/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+  <xs:complexType name="RoutingResult">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="infos" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="infosStations" nillable="true" type="tns:ArrayOfStation" />
+      <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="routes" nillable="true" type="q1:ArrayOfstring" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RoutingResult" nillable="true" type="tns:RoutingResult" />
   <xs:complexType name="ArrayOfStation">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Station" nillable="true" type="tns:Station" />
@@ -26,11 +35,28 @@
   </xs:complexType>
   <xs:element name="Station" nillable="true" type="tns:Station" />
   <xs:complexType name="Stands">
-    <xs:sequence />
+    <xs:sequence>
+      <xs:element minOccurs="0" name="availabilities" nillable="true" type="tns:Availabilities" />
+      <xs:element minOccurs="0" name="capacity" type="xs:int" />
+    </xs:sequence>
   </xs:complexType>
   <xs:element name="Stands" nillable="true" type="tns:Stands" />
+  <xs:complexType name="Availabilities">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="bikes" type="xs:int" />
+      <xs:element minOccurs="0" name="electricalBikes" type="xs:int" />
+      <xs:element minOccurs="0" name="electricalInternalBatteryBikes" type="xs:int" />
+      <xs:element minOccurs="0" name="electricalRemovableBatteryBikes" type="xs:int" />
+      <xs:element minOccurs="0" name="mechanicalBikes" type="xs:int" />
+      <xs:element minOccurs="0" name="stands" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Availabilities" nillable="true" type="tns:Availabilities" />
   <xs:complexType name="Position">
-    <xs:sequence />
+    <xs:sequence>
+      <xs:element minOccurs="0" name="latitude" type="xs:float" />
+      <xs:element minOccurs="0" name="longitude" type="xs:float" />
+    </xs:sequence>
   </xs:complexType>
   <xs:element name="Position" nillable="true" type="tns:Position" />
 </xs:schema>

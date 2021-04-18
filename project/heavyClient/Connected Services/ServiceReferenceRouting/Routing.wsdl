@@ -5,24 +5,25 @@
       <xsd:import schemaLocation="http://localhost:8734/Design_Time_Addresses/Routing/?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:8734/Design_Time_Addresses/Routing/?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
       <xsd:import schemaLocation="http://localhost:8734/Design_Time_Addresses/Routing/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Routing" />
+      <xsd:import schemaLocation="http://localhost:8734/Design_Time_Addresses/Routing/?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
     </xsd:schema>
   </wsdl:types>
-  <wsdl:message name="IRouting_GetRouting_InputMessage">
-    <wsdl:part name="parameters" element="tns:GetRouting" />
+  <wsdl:message name="IRouting_GetRoutingMap_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoutingMap" />
   </wsdl:message>
-  <wsdl:message name="IRouting_GetRouting_OutputMessage">
-    <wsdl:part name="parameters" element="tns:GetRoutingResponse" />
+  <wsdl:message name="IRouting_GetRoutingMap_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRoutingMapResponse" />
   </wsdl:message>
   <wsdl:portType name="IRouting">
-    <wsdl:operation name="GetRouting">
-      <wsdl:input wsaw:Action="http://tempuri.org/IRouting/GetRouting" message="tns:IRouting_GetRouting_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/IRouting/GetRoutingResponse" message="tns:IRouting_GetRouting_OutputMessage" />
+    <wsdl:operation name="GetRoutingMap">
+      <wsdl:input wsaw:Action="http://tempuri.org/IRouting/GetRoutingMap" message="tns:IRouting_GetRoutingMap_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IRouting/GetRoutingMapResponse" message="tns:IRouting_GetRoutingMap_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="SoapRouting" type="tns:IRouting">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
-    <wsdl:operation name="GetRouting">
-      <soap:operation soapAction="http://tempuri.org/IRouting/GetRouting" style="document" />
+    <wsdl:operation name="GetRoutingMap">
+      <soap:operation soapAction="http://tempuri.org/IRouting/GetRoutingMap" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

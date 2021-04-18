@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:8734/Design_Time_Addresses/Routing/?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Routing" />
-  <xs:element name="GetRouting">
+  <xs:element name="GetRoutingMap">
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="start" nillable="true" type="xs:string" />
@@ -9,10 +9,10 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetRoutingResponse">
+  <xs:element name="GetRoutingMapResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Routing" minOccurs="0" name="GetRoutingResult" nillable="true" type="q1:ArrayOfStation" />
+        <xs:element xmlns:q1="http://schemas.datacontract.org/2004/07/Routing" minOccurs="0" name="GetRoutingMapResult" nillable="true" type="q1:RoutingResult" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

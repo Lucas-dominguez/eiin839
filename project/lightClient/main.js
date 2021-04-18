@@ -14,6 +14,26 @@ function displayError(error){
     document.getElementById("error").innerHTML = error;
 }
 
+function displayInstruction(r){
+    tripInstructions = ""
+    for(var i =0; i< r.length; i++){
+        if(r.length < 2){
+            tripInstructions  += "Trajet : <br>"
+        }
+        else{
+            if(i == 0) tripInstructions  += "Trajet jusqu'à la station :<br>"
+            if(i == 1) tripInstructions  += "Trajet en vélo :<br>"
+            if(i == 2) tripInstructions  += "Trajet en jusqu'à la destination :<br>"
+        }
+        var steps = r[i].routes[0].legs[0].steps;
+        for (var j = 0; j < steps.length; j++) {
+            tripInstructions += '<li>' + steps[j].maneuver.instruction + '</li>';
+          }
+         tripInstructions += "<br><br>"
+    }
+    document.getElementById("modalTxt").innerHTML = tripInstructions
+}
+
 function displayInfos(r){
     s = ""
     t = 0
@@ -190,6 +210,7 @@ function displayMap(){
         });
     });
     displayInfos(routesForMap)
+    displayInstruction(routesForMap)
     document.getElementById("affichInfo").style.display = ""
     document.getElementById("error").innerHTML = "";
 

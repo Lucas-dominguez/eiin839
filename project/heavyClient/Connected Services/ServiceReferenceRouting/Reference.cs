@@ -15,6 +15,83 @@ namespace heavyClient.ServiceReferenceRouting {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="RoutingResult", Namespace="http://schemas.datacontract.org/2004/07/Routing")]
+    [System.SerializableAttribute()]
+    public partial class RoutingResult : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string infosField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private heavyClient.ServiceReferenceRouting.Station[] infosStationsField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] routesField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string infos {
+            get {
+                return this.infosField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.infosField, value) != true)) {
+                    this.infosField = value;
+                    this.RaisePropertyChanged("infos");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public heavyClient.ServiceReferenceRouting.Station[] infosStations {
+            get {
+                return this.infosStationsField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.infosStationsField, value) != true)) {
+                    this.infosStationsField = value;
+                    this.RaisePropertyChanged("infosStations");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] routes {
+            get {
+                return this.routesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.routesField, value) != true)) {
+                    this.routesField = value;
+                    this.RaisePropertyChanged("routes");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Station", Namespace="http://schemas.datacontract.org/2004/07/Routing")]
     [System.SerializableAttribute()]
     public partial class Station : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -275,6 +352,12 @@ namespace heavyClient.ServiceReferenceRouting {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private heavyClient.ServiceReferenceRouting.Availabilities availabilitiesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int capacityField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -282,6 +365,32 @@ namespace heavyClient.ServiceReferenceRouting {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public heavyClient.ServiceReferenceRouting.Availabilities availabilities {
+            get {
+                return this.availabilitiesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.availabilitiesField, value) != true)) {
+                    this.availabilitiesField = value;
+                    this.RaisePropertyChanged("availabilities");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int capacity {
+            get {
+                return this.capacityField;
+            }
+            set {
+                if ((this.capacityField.Equals(value) != true)) {
+                    this.capacityField = value;
+                    this.RaisePropertyChanged("capacity");
+                }
             }
         }
         
@@ -304,6 +413,12 @@ namespace heavyClient.ServiceReferenceRouting {
         [System.NonSerializedAttribute()]
         private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private float latitudeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private float longitudeField;
+        
         [global::System.ComponentModel.BrowsableAttribute(false)]
         public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
             get {
@@ -311,6 +426,157 @@ namespace heavyClient.ServiceReferenceRouting {
             }
             set {
                 this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float latitude {
+            get {
+                return this.latitudeField;
+            }
+            set {
+                if ((this.latitudeField.Equals(value) != true)) {
+                    this.latitudeField = value;
+                    this.RaisePropertyChanged("latitude");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public float longitude {
+            get {
+                return this.longitudeField;
+            }
+            set {
+                if ((this.longitudeField.Equals(value) != true)) {
+                    this.longitudeField = value;
+                    this.RaisePropertyChanged("longitude");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Availabilities", Namespace="http://schemas.datacontract.org/2004/07/Routing")]
+    [System.SerializableAttribute()]
+    public partial class Availabilities : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int bikesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int electricalBikesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int electricalInternalBatteryBikesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int electricalRemovableBatteryBikesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int mechanicalBikesField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private int standsField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int bikes {
+            get {
+                return this.bikesField;
+            }
+            set {
+                if ((this.bikesField.Equals(value) != true)) {
+                    this.bikesField = value;
+                    this.RaisePropertyChanged("bikes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int electricalBikes {
+            get {
+                return this.electricalBikesField;
+            }
+            set {
+                if ((this.electricalBikesField.Equals(value) != true)) {
+                    this.electricalBikesField = value;
+                    this.RaisePropertyChanged("electricalBikes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int electricalInternalBatteryBikes {
+            get {
+                return this.electricalInternalBatteryBikesField;
+            }
+            set {
+                if ((this.electricalInternalBatteryBikesField.Equals(value) != true)) {
+                    this.electricalInternalBatteryBikesField = value;
+                    this.RaisePropertyChanged("electricalInternalBatteryBikes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int electricalRemovableBatteryBikes {
+            get {
+                return this.electricalRemovableBatteryBikesField;
+            }
+            set {
+                if ((this.electricalRemovableBatteryBikesField.Equals(value) != true)) {
+                    this.electricalRemovableBatteryBikesField = value;
+                    this.RaisePropertyChanged("electricalRemovableBatteryBikes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int mechanicalBikes {
+            get {
+                return this.mechanicalBikesField;
+            }
+            set {
+                if ((this.mechanicalBikesField.Equals(value) != true)) {
+                    this.mechanicalBikesField = value;
+                    this.RaisePropertyChanged("mechanicalBikes");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public int stands {
+            get {
+                return this.standsField;
+            }
+            set {
+                if ((this.standsField.Equals(value) != true)) {
+                    this.standsField = value;
+                    this.RaisePropertyChanged("stands");
+                }
             }
         }
         
@@ -328,11 +594,11 @@ namespace heavyClient.ServiceReferenceRouting {
     [System.ServiceModel.ServiceContractAttribute(ConfigurationName="ServiceReferenceRouting.IRouting")]
     public interface IRouting {
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRouting/GetRouting", ReplyAction="http://tempuri.org/IRouting/GetRoutingResponse")]
-        heavyClient.ServiceReferenceRouting.Station[] GetRouting(string start, string end);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRouting/GetRoutingMap", ReplyAction="http://tempuri.org/IRouting/GetRoutingMapResponse")]
+        heavyClient.ServiceReferenceRouting.RoutingResult GetRoutingMap(string start, string end);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRouting/GetRouting", ReplyAction="http://tempuri.org/IRouting/GetRoutingResponse")]
-        System.Threading.Tasks.Task<heavyClient.ServiceReferenceRouting.Station[]> GetRoutingAsync(string start, string end);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IRouting/GetRoutingMap", ReplyAction="http://tempuri.org/IRouting/GetRoutingMapResponse")]
+        System.Threading.Tasks.Task<heavyClient.ServiceReferenceRouting.RoutingResult> GetRoutingMapAsync(string start, string end);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
@@ -362,12 +628,12 @@ namespace heavyClient.ServiceReferenceRouting {
                 base(binding, remoteAddress) {
         }
         
-        public heavyClient.ServiceReferenceRouting.Station[] GetRouting(string start, string end) {
-            return base.Channel.GetRouting(start, end);
+        public heavyClient.ServiceReferenceRouting.RoutingResult GetRoutingMap(string start, string end) {
+            return base.Channel.GetRoutingMap(start, end);
         }
         
-        public System.Threading.Tasks.Task<heavyClient.ServiceReferenceRouting.Station[]> GetRoutingAsync(string start, string end) {
-            return base.Channel.GetRoutingAsync(start, end);
+        public System.Threading.Tasks.Task<heavyClient.ServiceReferenceRouting.RoutingResult> GetRoutingMapAsync(string start, string end) {
+            return base.Channel.GetRoutingMapAsync(start, end);
         }
     }
 }
