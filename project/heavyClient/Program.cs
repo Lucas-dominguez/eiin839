@@ -180,7 +180,7 @@ namespace heavyClient {
                             for (i = 1; i < rw+1; i++)
                             {
                                 string cellValue = (string)(range.Cells[i, 1] as Excel.Range).Value2;
-                                if (cellValue.Equals(s.name))
+                                if (cellValue!= null && cellValue.Equals(s.name))
                                 {
                                     double value = ((double)(range.Cells[i, 2] as Excel.Range).Value2 + 1);
                                     excelWorksheet.Cells[i, 2] = value;
