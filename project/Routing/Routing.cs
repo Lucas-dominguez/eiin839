@@ -11,12 +11,15 @@ using System.Globalization;
 
 namespace Routing
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class Routing : IRouting {
         HttpClient client;
         List<Station> stations;
         public Routing() {
-            this.client = new HttpClient();
-            this.GetAllStation();
+            if(stations == null) {
+                this.client = new HttpClient();
+                this.GetAllStation();
+            }
         }
         public RoutingResult GetRoutingMap(string start, string end) {
             System.ServiceModel.Web.WebOperationContext.Current.OutgoingResponse.Headers.Add("Access-Control-Allow-Origin", "*");

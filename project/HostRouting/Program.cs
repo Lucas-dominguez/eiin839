@@ -13,16 +13,6 @@ namespace HostCache
                 svcHost = new ServiceHost(typeof(Routing.Routing));
                 try
                 {
-                    /*
-                    ServiceMetadataBehavior smb = new ServiceMetadataBehavior();
-                    smb.HttpGetEnabled = true;
-                    smb.MetadataExporter.PolicyVersion = PolicyVersion.Policy15;
-                    svcHost.Description.Behaviors.Add(smb);
-
-                    WSHttpBinding webHttpBinding = new WSHttpBinding();
-                    BasicHttpBinding basicHttpBinding = new BasicHttpBinding();
-                    svcHost.AddServiceEndpoint(typeof(Routing.IRouting), webHttpBinding, baseaddr + "rest");
-                    svcHost.AddServiceEndpoint(typeof(Routing.IRouting), basicHttpBinding, baseaddr + "soap");*/
                     svcHost.Open();
 
                 }
